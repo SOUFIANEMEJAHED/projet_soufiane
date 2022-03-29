@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Appartient{% endblock %}
+
+{% block body %}
+    <h1>Edit Appartient</h1>
+
+    {{ include('appartien/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_appartien_index') }}">back to list</a>
+
+    {{ include('appartien/_delete_form.html.twig') }}
+{% endblock %}

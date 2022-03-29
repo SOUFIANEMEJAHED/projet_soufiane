@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Motscles{% endblock %}
+
+{% block body %}
+    <h1>Motscles</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ motscle.id }}</td>
+            </tr>
+            <tr>
+                <th>Motcle</th>
+                <td>{{ motscle.motcle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_motscles_index') }}">back to list</a>
+
+    <a href="{{ path('app_motscles_edit', {'id': motscle.id}) }}">edit</a>
+
+    {{ include('motscles/_delete_form.html.twig') }}
+{% endblock %}

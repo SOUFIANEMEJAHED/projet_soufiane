@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Appartient{% endblock %}
+
+{% block body %}
+    <h1>Appartient</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ appartient.id }}</td>
+            </tr>
+            <tr>
+                <th>Id_article</th>
+                <td>{{ appartient.idArticle }}</td>
+            </tr>
+            <tr>
+                <th>Id_categorie</th>
+                <td>{{ appartient.idCategorie }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_appartien_index') }}">back to list</a>
+
+    <a href="{{ path('app_appartien_edit', {'id': appartient.id}) }}">edit</a>
+
+    {{ include('appartien/_delete_form.html.twig') }}
+{% endblock %}

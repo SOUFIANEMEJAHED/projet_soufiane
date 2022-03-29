@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Motscles{% endblock %}
+
+{% block body %}
+    <h1>Edit Motscles</h1>
+
+    {{ include('motscles/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_motscles_index') }}">back to list</a>
+
+    {{ include('motscles/_delete_form.html.twig') }}
+{% endblock %}
