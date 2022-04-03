@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\Commentaire;
-use App\Form\CommentaireType;
+use App\Form\Commentaire1Type;
 use App\Repository\CommentaireRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,14 +29,17 @@ class CommentaireController extends AbstractController
     /**
      * @Route("/new", name="app_commentaire_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, CommentaireRepository $commentaireRepository): Response
+    public function new(Request $request, CommentaireRepository $commentaireRepository,Article $article): Response
     {
         $commentaire = new Commentaire();
-        $form = $this->createForm(CommentaireType::class, $commentaire);
+        
+        $form = $this->createForm(Commentaire1Type::class, $commentaire);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $commentaire->setArticle($article);
             $commentaireRepository->add($commentaire);
+            
             return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -60,7 +64,7 @@ class CommentaireController extends AbstractController
      */
     public function edit(Request $request, Commentaire $commentaire, CommentaireRepository $commentaireRepository): Response
     {
-        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form = $this->createForm(Commentaire1Type::class, $commentaire);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

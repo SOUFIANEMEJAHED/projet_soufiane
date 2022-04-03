@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AppartienController extends AbstractController
 {
     /**
-     * @Route("/", name="app_appartien_index", methods={"GET"})
+     * @Route("e/", name="app_appartien_index", methods={"GET"})
      */
     public function index(AppartientRepository $appartientRepository): Response
     {

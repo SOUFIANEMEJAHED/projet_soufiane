@@ -12,7 +12,6 @@
                 <th>Contenu</th>
                 <th>Date_creation</th>
                 <th>Id_user</th>
-                <th>Id_article</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,7 +22,6 @@
                 <td>{{ commentaire.contenu }}</td>
                 <td>{{ commentaire.dateCreation ? commentaire.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ commentaire.idUser }}</td>
-                <td>{{ commentaire.idArticle }}</td>
                 <td>
                     <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}">show</a>
                     <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}">edit</a>
@@ -31,7 +29,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

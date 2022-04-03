@@ -34,16 +34,25 @@ class Commentaire
      */
     private $id_user;
 
+   
+
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="yes")
      */
-    private $id_article;
+    private $article;
+
+ 
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return (string) $this->article; 
+
+    }
     
 
     public function getContenu(): ?string
@@ -82,15 +91,20 @@ class Commentaire
         return $this;
     }
 
-    public function getIdArticle(): ?int
+    
+
+    public function getArticle(): ?Article
     {
-        return $this->id_article;
+        return $this->article;
     }
 
-    public function setIdArticle(int $id_article): self
+    public function setArticle(?Article $article): self
     {
-        $this->id_article = $id_article;
+        $this->article = $article;
 
         return $this;
     }
+
+    
+
 }

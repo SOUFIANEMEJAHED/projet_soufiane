@@ -3,9 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Commentaire;
 use App\Form\ArticleType;
+use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentaireRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,11 +52,15 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/{id}", name="app_article_show", methods={"GET"})
+     * 
      */
-    public function show(Article $article): Response
+    public function show(Article $article,Request $request): Response
     {
+       
+       
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            
         ]);
     }
 

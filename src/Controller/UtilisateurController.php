@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class UtilisateurController extends AbstractController
 {
     /**
-     * @Route("/", name="app_utilisateur_index", methods={"GET"})
+     * @Route("e/", name="app_utilisateur_index", methods={"GET"})
      */
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {

@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MotsclesController extends AbstractController
 {
     /**
-     * @Route("/", name="app_motscles_index", methods={"GET"})
+     * @Route("e/", name="app_motscles_index", methods={"GET"})
      */
     public function index(MotsclesRepository $motsclesRepository): Response
     {

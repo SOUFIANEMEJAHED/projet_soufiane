@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AvoirController extends AbstractController
 {
     /**
-     * @Route("/", name="app_avoir_index", methods={"GET"})
+     * @Route("", name="app_avoir_index", methods={"GET"})
      */
     public function index(AvoirRepository $avoirRepository): Response
     {

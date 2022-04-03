@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class Article
      * @ORM\Column(type="integer")
      */
     private $id_user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="article")
+     */
+    private $yes;
+
+    public function __construct()
+    {
+        $this->yes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,36 @@ class Article
     public function setIdUser(int $id_user): self
     {
         $this->id_user = $id_user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getYes(): Collection
+    {
+        return $this->yes;
+    }
+
+    public function addYe(Commentaire $ye): self
+    {
+        if (!$this->yes->contains($ye)) {
+            $this->yes[] = $ye;
+            $ye->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeYe(Commentaire $ye): self
+    {
+        if ($this->yes->removeElement($ye)) {
+            // set the owning side to null (unless already changed)
+            if ($ye->getArticle() === $this) {
+                $ye->setArticle(null);
+            }
+        }
 
         return $this;
     }
