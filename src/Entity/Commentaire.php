@@ -48,11 +48,6 @@ class Commentaire
         return $this->id;
     }
 
-    public function __toString()
-    {
-        return (string) $this->article; 
-
-    }
     
 
     public function getContenu(): ?string

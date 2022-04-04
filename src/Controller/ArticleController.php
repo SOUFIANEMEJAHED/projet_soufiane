@@ -8,9 +8,9 @@ use App\Form\ArticleType;
 use App\Form\CommentaireType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentaireRepository;
+use App\Repository\CategorieRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,17 +23,19 @@ class ArticleController extends AbstractController
     /**
      * @Route("/", name="app_article_index", methods={"GET"})
      */
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository,CategorieRepository $categorieRepository): Response
     {
         return $this->render('article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
+            'categories' => $categorieRepository->findAll(),
+            
         ]);
     }
 
     /**
      * @Route("/new", name="app_article_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, ArticleRepository $articleRepository): Response
+    public function new(Request $request, ArticleRepository $articleRepository,CategorieRepository $categorieRepository): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -47,19 +49,42 @@ class ArticleController extends AbstractController
         return $this->render('article/new.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
+            'categories' => $categorieRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="app_article_show", methods={"GET"})
+     * @Route("/{id}", name="app_article_show", methods={"GET", "POST"})
      * 
      */
-    public function show(Article $article,Request $request): Response
+    public function show(Article $article,Request $request, CommentaireRepository $commentaireRepository,CategorieRepository $categorieRepository): Response
     {
        
+        $commentaire = new Commentaire();
+        
+        $form = $this->createForm(CommentaireType::class,$commentaire);
+        
+        
+        $commentaire->setArticle($article);
+        $commentaire->setDateCreation(new DateTime());
        
+        $form->handleRequest($request); 
+        
+
+        if ($form->isSubmitted() && $form->isValid()) {
+           
+            $commentaireRepository->add($commentaire);
+            return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+
+
+           
+        }
+
         return $this->render('article/show.html.twig', [
             'article' => $article,
+            'commentaire' => $commentaire,
+            'form' => $form->createView(),
+            'categories' => $categorieRepository->findAll(),
             
         ]);
     }
@@ -67,7 +92,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_article_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    public function edit(Request $request, Article $article, ArticleRepository $articleRepository,CategorieRepository $categorieRepository): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -80,6 +105,7 @@ class ArticleController extends AbstractController
         return $this->render('article/edit.html.twig', [
             'article' => $article,
             'form' => $form->createView(),
+            'categories' => $categorieRepository->findAll(),
         ]);
     }
 
@@ -93,5 +119,19 @@ class ArticleController extends AbstractController
         }
 
         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+    }
+    public function admin()
+    {
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findBy(
+            [],
+            ['lastUpdateDate' => 'DESC']
+        );
+
+        $users = $this->getDoctrine()->getRepository(Utilisateur::class)->findAll();
+
+        return $this->render('admin/index.html.twig', [
+            'articles' => $articles,
+            'users' => $users
+        ]);
     }
 }

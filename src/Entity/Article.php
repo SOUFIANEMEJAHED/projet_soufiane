@@ -47,16 +47,33 @@ class Article
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="article")
      */
-    private $yes;
+    private $commentaires;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Categorie::class, inversedBy="articles")
+     */
+    private $categorie;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Motscles::class, inversedBy="articles")
+     */
+    private $motscles;
 
     public function __construct()
     {
-        $this->yes = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
+        $this->categorie = new ArrayCollection();
+        $this->motscles = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString()
+    {
+        return __CLASS__;
     }
 
     public function getTitre(): ?string
@@ -122,29 +139,77 @@ class Article
     /**
      * @return Collection<int, Commentaire>
      */
-    public function getYes(): Collection
+    public function getCommentaires(): Collection
     {
-        return $this->yes;
+        return $this->commentaires;
     }
 
-    public function addYe(Commentaire $ye): self
+    public function addCommentaire(Commentaire $commentaire): self
     {
-        if (!$this->yes->contains($ye)) {
-            $this->yes[] = $ye;
-            $ye->setArticle($this);
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setArticle($this);
         }
 
         return $this;
     }
 
-    public function removeYe(Commentaire $ye): self
+    public function removeCommentaire(Commentaire $commentaire): self
     {
-        if ($this->yes->removeElement($ye)) {
+        if ($this->commentaires->removeElement($commentaire)) {
             // set the owning side to null (unless already changed)
-            if ($ye->getArticle() === $this) {
-                $ye->setArticle(null);
+            if ($commentaire->getArticle() === $this) {
+                $commentaire->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getCategorie(): Collection
+    {
+        return $this->categorie;
+    }
+
+    public function addCategorie(Categorie $categorie): self
+    {
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie[] = $categorie;
+        }
+
+        return $this;
+    }
+
+    public function removeCategorie(Categorie $categorie): self
+    {
+        $this->categorie->removeElement($categorie);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Motscles>
+     */
+    public function getMotscles(): Collection
+    {
+        return $this->motscles;
+    }
+
+    public function addMotscle(Motscles $motscle): self
+    {
+        if (!$this->motscles->contains($motscle)) {
+            $this->motscles[] = $motscle;
+        }
+
+        return $this;
+    }
+
+    public function removeMotscle(Motscles $motscle): self
+    {
+        $this->motscles->removeElement($motscle);
 
         return $this;
     }

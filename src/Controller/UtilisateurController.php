@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/utilisateur")
@@ -28,13 +29,14 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/new", name="app_utilisateur_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, UtilisateurRepository $utilisateurRepository): Response
+    public function new(Request $request, UtilisateurRepository $utilisateurRepository,UserPasswordEncoderInterface $encoder): Response
     {
         $utilisateur = new Utilisateur();
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $utilisateur->setpassword($encoder->encodePassword($utilisateur, $utilisateur->getPassword()));
             $utilisateurRepository->add($utilisateur);
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -58,12 +60,13 @@ class UtilisateurController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_utilisateur_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository): Response
+    public function edit(Request $request, Utilisateur $utilisateur, UtilisateurRepository $utilisateurRepository,UserPasswordEncoderInterface $encoder): Response
     {
         $form = $this->createForm(UtilisateurType::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $utilisateur->setpassword($encoder->encodePassword($utilisateur, $utilisateur->getPassword()));
             $utilisateurRepository->add($utilisateur);
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }

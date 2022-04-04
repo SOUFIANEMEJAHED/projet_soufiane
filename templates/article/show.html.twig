@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1>Article</h1>
+	  <h1>Create new Commentaire</h1>
 
+    {{ include('commentaire/_form.html.twig') }}
      <div class="container">
    
 		<div class="row">
@@ -22,6 +24,25 @@
 				</div>
 			
 		</div>
+	</div>
+	<div class="col-md-9">
+	{% for commentaire in article.commentaires %}
+
+		
+
+		<div class="card" >
+ 	 <div class="card-body">
+    <h5 class="card-title">{{commentaire.iduser}}</h5>
+   
+    <p class="card-text">{{ commentaire.contenu}}</p>
+    
+  </div>
+</div>
+
+	{% endfor  %}
+	
+		
+	
 	</div>
     <a href="{{ path('app_article_index') }}">back to list</a>
 

@@ -1,3 +1,6 @@
 index:
    path: '/'
    controller: App\Controller\ArticleController::index
+admin:
+  path: /admin
+  controller: App\Controller\AdminController::admin
