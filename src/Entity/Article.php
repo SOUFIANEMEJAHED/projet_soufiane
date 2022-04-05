@@ -39,10 +39,7 @@ class Article
      */
     private $date_modif;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $id_user;
+   
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="article")
@@ -58,6 +55,11 @@ class Article
      * @ORM\ManyToMany(targetEntity=Motscles::class, inversedBy="articles")
      */
     private $motscles;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="teeeest")
+     */
+    private $utilisateur;
 
     public function __construct()
     {
@@ -124,17 +126,6 @@ class Article
         return $this;
     }
 
-    public function getIdUser(): ?int
-    {
-        return $this->id_user;
-    }
-
-    public function setIdUser(int $id_user): self
-    {
-        $this->id_user = $id_user;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Commentaire>
@@ -210,6 +201,18 @@ class Article
     public function removeMotscle(Motscles $motscle): self
     {
         $this->motscles->removeElement($motscle);
+
+        return $this;
+    }
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): self
+    {
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

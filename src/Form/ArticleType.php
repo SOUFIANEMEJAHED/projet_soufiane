@@ -16,7 +16,7 @@ class ArticleType extends AbstractType
             ->add('contenu')
             ->add('date_creation')
             ->add('date_modif')
-            ->add('id_user')
+            
         ;
     }
 

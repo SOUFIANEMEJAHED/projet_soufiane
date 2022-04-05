@@ -18,8 +18,11 @@
 							<h5 class="card-title">{{article.titre}}</h5>
 							<p class="card-text">{{article.contenu}}</p>
 							<p> {{article.datecreation |date("d/m/Y")}}</p>
-                            <a href="{{ path('app_article_show', {'id': article.id}) }} " class="btn btn-primary">lire</a>
+                           
+						    <a href="{{ path('app_article_show', {'id': article.id}) }} " class="btn btn-primary">lire</a>
+							 {% if app.user and article.utilisateur == app.user %}
                             <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+							 {% endif %}
 						</div>
 					</div>
 				</div>
@@ -33,5 +36,5 @@
 
 
      
-    <a href="{{ path('app_article_new') }}">Create new</a>
+   
 {% endblock %}

@@ -13,7 +13,8 @@ class CommentaireType extends AbstractType
     {
         $builder
             ->add('contenu')
-            ->add('id_user')
+            ->setIdUser( $this->get('security.token_storage')->getToken()->getUser()->getId());
+            
             
         ;
     }

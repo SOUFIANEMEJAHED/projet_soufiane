@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220404002453 extends AbstractMigration
+final class Version20220405133520 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,6 +20,13 @@ final class Version20220404002453 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('DROP INDEX IDX_23A0E66FB88E14F');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__article AS SELECT id, utilisateur_id, titre, contenu, date_creation, date_modif, id_user FROM article');
+        $this->addSql('DROP TABLE article');
+        $this->addSql('CREATE TABLE article (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, utilisateur_id INTEGER DEFAULT NULL, titre VARCHAR(255) DEFAULT NULL, contenu CLOB DEFAULT NULL, date_creation DATETIME NOT NULL, date_modif DATETIME DEFAULT NULL, id_user INTEGER NOT NULL, CONSTRAINT FK_23A0E66FB88E14F FOREIGN KEY (utilisateur_id) REFERENCES utilisateur (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('INSERT INTO article (id, utilisateur_id, titre, contenu, date_creation, date_modif, id_user) SELECT id, utilisateur_id, titre, contenu, date_creation, date_modif, id_user FROM __temp__article');
+        $this->addSql('DROP TABLE __temp__article');
+        $this->addSql('CREATE INDEX IDX_23A0E66FB88E14F ON article (utilisateur_id)');
         $this->addSql('DROP INDEX IDX_934886107294869C');
         $this->addSql('DROP INDEX IDX_93488610BCF5E72D');
         $this->addSql('CREATE TEMPORARY TABLE __temp__article_categorie AS SELECT article_id, categorie_id FROM article_categorie');
@@ -50,6 +57,13 @@ final class Version20220404002453 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('DROP INDEX IDX_23A0E66FB88E14F');
+        $this->addSql('CREATE TEMPORARY TABLE __temp__article AS SELECT id, utilisateur_id, titre, contenu, date_creation, date_modif, id_user FROM article');
+        $this->addSql('DROP TABLE article');
+        $this->addSql('CREATE TABLE article (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, utilisateur_id INTEGER DEFAULT NULL, titre VARCHAR(255) DEFAULT NULL, contenu CLOB DEFAULT NULL, date_creation DATETIME NOT NULL, date_modif DATETIME DEFAULT NULL, id_user INTEGER NOT NULL)');
+        $this->addSql('INSERT INTO article (id, utilisateur_id, titre, contenu, date_creation, date_modif, id_user) SELECT id, utilisateur_id, titre, contenu, date_creation, date_modif, id_user FROM __temp__article');
+        $this->addSql('DROP TABLE __temp__article');
+        $this->addSql('CREATE INDEX IDX_23A0E66FB88E14F ON article (utilisateur_id)');
         $this->addSql('DROP INDEX IDX_934886107294869C');
         $this->addSql('DROP INDEX IDX_93488610BCF5E72D');
         $this->addSql('CREATE TEMPORARY TABLE __temp__article_categorie AS SELECT article_id, categorie_id FROM article_categorie');

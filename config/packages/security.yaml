@@ -21,6 +21,7 @@ security:
             guard:
                 authenticators:
                     - App\Security\UtilisateurAuthenticator
+                
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -39,3 +40,4 @@ security:
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        

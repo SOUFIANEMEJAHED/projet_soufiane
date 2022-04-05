@@ -38,7 +38,7 @@ class CommentaireController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             
             $commentaireRepository->add($commentaire);
-            return $this->redirectToRoute('app_commentaire_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_article_show', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('commentaire/new.html.twig', [

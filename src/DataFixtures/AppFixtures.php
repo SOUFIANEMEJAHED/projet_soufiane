@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\User\User;
 
 class AppFixtures extends Fixture
 {
@@ -23,7 +24,6 @@ class AppFixtures extends Fixture
 
         $article->setTitre($faker->sentence($nbWords = 2, $variableNbWords = true))
         ->setContenu($faker->sentence($nbWords = 10, $variableNbWords = true))
-        ->setIdUser($faker->numberBetween($min = 1, $max = 10))
         ->setDateCreation($faker->dateTimeBetween(' -6 months '))
         ->setDateModif(null);
 
