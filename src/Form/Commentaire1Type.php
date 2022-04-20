@@ -7,14 +7,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CommentaireType extends AbstractType
+class Commentaire1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('contenu')
+            ->add('date_creation')
             ->add('id_user')
-            
+            ->add('article')
         ;
     }
 

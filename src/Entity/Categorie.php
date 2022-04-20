@@ -25,13 +25,16 @@ class Categorie
     private $categorie;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="categorie")
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="categorie", orphanRemoval=true)
      */
     private $articles;
+
+   
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->articlees = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -51,6 +54,12 @@ class Categorie
         return $this;
     }
 
+   
+    public function __toString()
+    {
+        return __CLASS__;
+    }
+
     /**
      * @return Collection<int, Article>
      */
@@ -63,7 +72,7 @@ class Categorie
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
-            $article->addCategorie($this);
+            $article->setCategorie($this);
         }
 
         return $this;
@@ -72,7 +81,10 @@ class Categorie
     public function removeArticle(Article $article): self
     {
         if ($this->articles->removeElement($article)) {
-            $article->removeCategorie($this);
+            // set the owning side to null (unless already changed)
+            if ($article->getCategorie() === $this) {
+                $article->setCategorie(null);
+            }
         }
 
         return $this;

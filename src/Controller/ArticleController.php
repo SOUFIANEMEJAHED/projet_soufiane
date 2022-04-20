@@ -3,13 +3,18 @@
 namespace App\Controller;
 use App\Entity\Utilisateur;
 use App\Entity\Article;
+use App\Entity\Categorie;
+use App\Entity\Motscles;
 use App\Entity\Commentaire;
+use App\Entity\Motscles as EntityMotscles;
 use App\Form\ArticleType;
 use App\Form\CommentaireType;
+use App\Form\CategorieType;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentaireRepository;
 use App\Repository\CategorieRepository;
 use DateTime;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,10 +22,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 /**
  * @Route("/article")
  */
-class ArticleController extends AbstractController
+class ArticleController extends AbstractController 
 {
     /**
      * @Route("/", name="app_article_index", methods={"GET"})
@@ -41,10 +47,14 @@ class ArticleController extends AbstractController
      */
     public function new(Request $request, ArticleRepository $articleRepository,CategorieRepository $categorieRepository,UserInterface $utilisateur): Response
     {
+        
+        
+        
         $article = new Article();
         
         $form = $this->createForm(ArticleType::class, $article);
         $article->setUtilisateur($utilisateur);
+       
         $form->handleRequest($request);
         
 
@@ -59,6 +69,7 @@ class ArticleController extends AbstractController
             'form' => $form->createView(),
             'categories' => $categorieRepository->findAll(),
             
+            
         ]);
     }
 
@@ -66,14 +77,17 @@ class ArticleController extends AbstractController
      * @Route("/{id}", name="app_article_show", methods={"GET", "POST"})
      * 
      */
-    public function show(Article $article,Request $request, CommentaireRepository $commentaireRepository,CategorieRepository $categorieRepository,UserInterface $utilisateur): Response
+    public function show(Article $article,Request $request, CommentaireRepository $commentaireRepository,CategorieRepository $categorieRepository,UserInterface $Utilisateur): Response
     {
          
             $commentaire = new Commentaire();
+            $id=$Utilisateur->getId();
+            
+            
         
             $form = $this->createForm(CommentaireType::class,$commentaire);
             
-            $commentaire->setIdUser($utilisateur->getId());
+            $commentaire->setIdUser($id);
             $commentaire->setArticle($article);
             $commentaire->setDateCreation(new DateTime());
            
@@ -101,16 +115,7 @@ class ArticleController extends AbstractController
         ]);
     } 
     
-    public function showano(Article $article,Request $request, CommentaireRepository $commentaireRepository,CategorieRepository $categorieRepository): Response
-    {
-         
-
-        return $this->render('article/show.html.twig', [
-            'article' => $article,
-            'categories' => $categorieRepository->findAll(),
-            
-        ]);
-    }
+   
 
     /**
      * @Route("/{id}/edit", name="app_article_edit", methods={"GET", "POST"})

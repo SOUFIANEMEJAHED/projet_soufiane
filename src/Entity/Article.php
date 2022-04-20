@@ -46,10 +46,7 @@ class Article
      */
     private $commentaires;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Categorie::class, inversedBy="articles")
-     */
-    private $categorie;
+   
 
     /**
      * @ORM\ManyToMany(targetEntity=Motscles::class, inversedBy="articles")
@@ -60,6 +57,12 @@ class Article
      * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="teeeest")
      */
     private $utilisateur;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="articlees")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
 
     public function __construct()
     {
@@ -157,29 +160,7 @@ class Article
         return $this;
     }
 
-    /**
-     * @return Collection<int, Categorie>
-     */
-    public function getCategorie(): Collection
-    {
-        return $this->categorie;
-    }
-
-    public function addCategorie(Categorie $categorie): self
-    {
-        if (!$this->categorie->contains($categorie)) {
-            $this->categorie[] = $categorie;
-        }
-
-        return $this;
-    }
-
-    public function removeCategorie(Categorie $categorie): self
-    {
-        $this->categorie->removeElement($categorie);
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection<int, Motscles>
@@ -213,6 +194,20 @@ class Article
     public function setUtilisateur(?Utilisateur $utilisateur): self
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?String
+    {
+        return $this->categorie;
+        
+    }
+
+
+    public function setCategorie(?Categorie $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

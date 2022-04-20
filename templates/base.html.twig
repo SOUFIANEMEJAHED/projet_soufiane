@@ -44,7 +44,7 @@
 
                 {% for categorie in categories %}
                 {% if categorie is defined and categorie is not null %}
-                <li><a class="dropdown-item" href="#"> {{ categorie.categorie }}</a></li> 
+                <li><a class="dropdown-item" href="{{ path('app_categorie_show', {'id': categorie.id}) }}"> {{ categorie.categorie }}</a></li> 
                 {% endif %} 
                 {% endfor %}
                 </ul>

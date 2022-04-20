@@ -43,6 +43,11 @@ class Utilisateur implements UserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
    
 
     public function __construct()
@@ -174,6 +179,18 @@ class Utilisateur implements UserInterface
     public function __toString()
     {
         return __CLASS__;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
     }
 
    
