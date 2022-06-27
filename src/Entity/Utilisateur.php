@@ -44,9 +44,11 @@ class Utilisateur implements UserInterface
     private $articles;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=200, nullable=true)
      */
-    private $name;
+    private $nomprenom;
+
+   
 
    
 
@@ -181,17 +183,19 @@ class Utilisateur implements UserInterface
         return __CLASS__;
     }
 
-    public function getName(): ?string
+    public function getNomprenom(): ?string
     {
-        return $this->name;
+        return $this->nomprenom;
     }
 
-    public function setName(string $name): self
+    public function setNomprenom(?string $nomprenom): self
     {
-        $this->name = $name;
+        $this->nomprenom = $nomprenom;
 
         return $this;
     }
+
+    
 
    
 }

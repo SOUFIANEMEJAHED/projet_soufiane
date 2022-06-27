@@ -16,9 +16,11 @@
 						<img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
 						<div class="card-body">
 							<h5 class="card-title">{{article.titre}}</h5>
-							<div class="card-text">{{article.contenu}}</div>
-							<p> {{article.datecreation |date("d/m/Y")}}</p>
-                           
+							<div class="d-flex justify-content-sm-end">
+							{% if app.user and article.utilisateur == app.user %}
+	          				  <p class="text-secondary">Par <a href="">{{ app.user.nomprenom }}</a> creer le  {{article.datecreation |date("d/m/Y")}}</p>
+								{% endif %}
+							</div>
 						    <a href="{{ path('app_article_show', {'id': article.id}) }} " class="btn btn-primary">lire</a>
 							 {% if app.user and article.utilisateur == app.user %}
                             <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>

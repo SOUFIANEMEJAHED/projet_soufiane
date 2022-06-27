@@ -6,6 +6,7 @@ use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UtilisateurType extends AbstractType
 {
@@ -13,8 +14,15 @@ class UtilisateurType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
             ->add('password')
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Admin' => 'ROLE_ADMIN',
+                    'User' => 'ROLE_USER',
+                ],
+            ])
+            
+           
         ;
     }
 

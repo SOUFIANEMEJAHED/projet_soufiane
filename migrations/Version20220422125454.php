@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220415143414 extends AbstractMigration
+final class Version20220422125454 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,7 +24,7 @@ final class Version20220415143414 extends AbstractMigration
         $this->addSql('DROP INDEX IDX_23A0E66FB88E14F');
         $this->addSql('CREATE TEMPORARY TABLE __temp__article AS SELECT id, utilisateur_id, categorie_id, titre, contenu, date_creation, date_modif FROM article');
         $this->addSql('DROP TABLE article');
-        $this->addSql('CREATE TABLE article (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, utilisateur_id INTEGER DEFAULT NULL, categorie_id INTEGER NOT NULL, titre VARCHAR(255) DEFAULT NULL, contenu CLOB DEFAULT NULL, date_creation DATETIME NOT NULL, date_modif DATETIME DEFAULT NULL, CONSTRAINT FK_23A0E66FB88E14F FOREIGN KEY (utilisateur_id) REFERENCES utilisateur (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_23A0E66BCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE TABLE article (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, utilisateur_id INTEGER DEFAULT NULL, categorie_id INTEGER DEFAULT NULL, titre VARCHAR(255) DEFAULT NULL, contenu CLOB DEFAULT NULL, date_creation DATETIME NOT NULL, date_modif DATETIME DEFAULT NULL, CONSTRAINT FK_23A0E66FB88E14F FOREIGN KEY (utilisateur_id) REFERENCES utilisateur (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_23A0E66BCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('INSERT INTO article (id, utilisateur_id, categorie_id, titre, contenu, date_creation, date_modif) SELECT id, utilisateur_id, categorie_id, titre, contenu, date_creation, date_modif FROM __temp__article');
         $this->addSql('DROP TABLE __temp__article');
         $this->addSql('CREATE INDEX IDX_23A0E66BCF5E72D ON article (categorie_id)');
@@ -54,7 +54,7 @@ final class Version20220415143414 extends AbstractMigration
         $this->addSql('DROP INDEX IDX_23A0E66BCF5E72D');
         $this->addSql('CREATE TEMPORARY TABLE __temp__article AS SELECT id, utilisateur_id, categorie_id, titre, contenu, date_creation, date_modif FROM article');
         $this->addSql('DROP TABLE article');
-        $this->addSql('CREATE TABLE article (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, utilisateur_id INTEGER DEFAULT NULL, categorie_id INTEGER DEFAULT NULL, titre VARCHAR(255) DEFAULT NULL, contenu CLOB DEFAULT NULL, date_creation DATETIME NOT NULL, date_modif DATETIME DEFAULT NULL)');
+        $this->addSql('CREATE TABLE article (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, utilisateur_id INTEGER DEFAULT NULL, categorie_id INTEGER NOT NULL, titre VARCHAR(255) DEFAULT NULL, contenu CLOB DEFAULT NULL, date_creation DATETIME NOT NULL, date_modif DATETIME DEFAULT NULL)');
         $this->addSql('INSERT INTO article (id, utilisateur_id, categorie_id, titre, contenu, date_creation, date_modif) SELECT id, utilisateur_id, categorie_id, titre, contenu, date_creation, date_modif FROM __temp__article');
         $this->addSql('DROP TABLE __temp__article');
         $this->addSql('CREATE INDEX IDX_23A0E66FB88E14F ON article (utilisateur_id)');

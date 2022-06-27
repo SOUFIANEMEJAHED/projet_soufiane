@@ -60,7 +60,7 @@ class Article
 
     /**
      * @ORM\ManyToOne(targetEntity=Categorie::class, inversedBy="articlees")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $categorie;
 
